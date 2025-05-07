@@ -1,0 +1,16 @@
+Etapa 1 — "Conexão com o banco" + "autenticação básica"
+
+
+O que fez se nesta fase foi:
+    1. Criamos o Banco de dados (XAMPP):
+        A- Colocamos a tabela de usuarios e inserimos ao menos 7 usuarios;
+        B- Ver na Pasta "BancoDados".
+
+    2. Montamos "TelaLogin":
+        A- O Botão "Entrar" verifica via AutenticacaoServico e redireciona.
+
+    3. Editamos:
+
+        A- "Conexao.cs" (Criar os modelos iniciais) 
+        B- "Usuario.cs" (com ID, nome, email, senha, tipo).
+        C- "AutenticacaoServico.cs" (função para loginco m e-mail e senha)

@@ -1,0 +1,30 @@
+# all ma Build
+bin/
+obj/
+lib/
+
+
+# 
+*.user
+*.suo
+*.csproj.user
+*.sln.docstates
+*README.md
+
+# Visual Studio 
+.vs/
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# by NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+
+Generated\ Files/

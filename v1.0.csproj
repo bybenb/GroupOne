@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    
+    <TargetFramework>net9.0-windows</TargetFramework> 
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.3.0" />
+
+
+    <None Update="App.config">
+    <CopyToOutputDirectory>
+      PreserveNewest
+    </CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,13 @@
+Etapa 2 — "Interface da Dashboard" + "autenticação básica"
+
+
+O que fez se nesta fase foi:
+    1. Criamos a tela TelaDashboard.cs; 
+
+    2. Criamos o menu lateral (Sidebar.cs)
+    
+    3. na "TelaLogin":
+        - Colocamos um evento para centralizar sempre os componentes
+
+    4. Aprimoramos o Banco de Dados:
+        - Atualizamos o níveis de Acesso...     (Domingos Tandala)

@@ -13,7 +13,7 @@ lib/
 
 # Visual Studio 
 .vs/
-.vscode/
+# .vscode/
 
 # Logs and temp files
 *.log

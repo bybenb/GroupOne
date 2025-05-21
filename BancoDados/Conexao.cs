@@ -14,8 +14,7 @@ namespace GestaoSimples.BancoDados
 
         private static string stringConexao = $"Server={servidor};Database={banco};Uid={usuario};Pwd={senha};";
 
-        public static MySqlConnection ObterConexao()
-        {
+        public static MySqlConnection ObterConexao() {
             var conexao = new MySqlConnection(stringConexao);
             conexao.Open();
             return conexao;

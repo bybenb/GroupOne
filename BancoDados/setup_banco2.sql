@@ -1,6 +1,6 @@
 -- Etapa 2
 
-DROP DATABASE IF EXISTS bancode_gestaosimples
+DROP DATABASE IF EXISTS bancode_gestaosimples;
 
 CREATE DATABASE bancode_gestaosimples;
 USE bancode_gestaosimples;

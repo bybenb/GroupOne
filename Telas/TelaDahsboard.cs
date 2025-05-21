@@ -9,6 +9,7 @@ using GestaoSimples.Servicos;
 using GestaoSimples.BancoDados;
 using GestaoSimples.Componentes;
 using GestaoSimples.Modelos;
+using System.Globalization;
 
 
 
@@ -83,10 +84,12 @@ namespace GestaoSimples.Telas
                 AutoSize = true
             };
 
+            CultureInfo idioma = new CultureInfo("pt-BR");  //  en-US
             Label lblData = new Label
             {
-                Text = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy"),
-                Font = new Font("Segoe UI", 10, FontStyle.Italic),
+                
+                Text = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", idioma),
+                Font = new Font("Segoe UI", 10, FontStyle.Italic),  // FONSAIZESTE (FONTE+SIZE+STYLE)
                 Location = new Point(400, 20),
                 AutoSize = true
             };
@@ -124,7 +127,7 @@ namespace GestaoSimples.Telas
             this.Controls.Add(painelConteudo);
         }
 
-        private Panel CriarCard(string titulo, string valor, string imagem = null)
+        private Panel CriarCard(string titulo, string valor, string imagem = "")
         {
             var card = new Panel
             {

@@ -8,12 +8,13 @@ using System.Windows.Forms;
 
 using GestaoSimples.Servicos;
 using GestaoSimples.Modelos;
+
 // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 
 namespace GestaoSimples.Telas {
     public class TelaLogin : Form {
         
-        private Label Titulo;
+        private Label copyrightt;
 
         private Label lblEmail;
         private TextBox txtEmail;
@@ -22,12 +23,16 @@ namespace GestaoSimples.Telas {
         private TextBox txtSenha;
 
         private Button btnEntrar;
+        private Button btnSair;
 
 
 
-        public TelaLogin() {
+        public TelaLogin()
+        {
 
             this.Text = "GestãoSimples - Login";
+            //   this.Icon = new Icon(@"..\imagens\img_logo-gs.ico");
+
             this.Width = 800;
             this.Height = 500;
             this.Resize += Evento_aumentarJanela;
@@ -35,25 +40,30 @@ namespace GestaoSimples.Telas {
             
 
 
-            lblEmail = new Label() {
+
+            lblEmail = new Label()
+            {
                 Text = "Digite o Email:",
                 Left = 300,
                 Top = 40,
                 Width = 120
-            };            
-            txtEmail = new TextBox() { 
-                Left =  300,
+            };
+            txtEmail = new TextBox()
+            {
+                Left = 300,
                 Top = 100,
                 Width = 200
             };
 
 
-            lblSenha = new Label() {
+            lblSenha = new Label()
+            {
                 Text = "Digite a Senha:",
                 Location = new Point(300, 120),
                 Width = 120
             };
-            txtSenha = new TextBox() {
+            txtSenha = new TextBox()
+            {
                 Left = 300,
                 Top = 150,
                 Width = 200,
@@ -61,19 +71,38 @@ namespace GestaoSimples.Telas {
             };
 
 
-            btnEntrar = new Button() {
+            btnEntrar = new Button()
+            {
                 Text = "Entrar",
-                Left = 100,
+                Left = 400,
                 Top = 300,
                 Width = 100
             };
             btnEntrar.Click += Evento_tocarBotao;
+
+            btnSair = new Button()
+            {
+                Text = "Sair",
+                BackColor = ColorTranslator.FromHtml("#ff0000"),
+                ForeColor = Color.Azure
+            };
+
+            copyrightt = new Label()
+            {
+                Text = "© 2025 Grupo One. Todos Direitos reservados à Eng. Joana Bungo.",
+                AutoSize = true,
+                Location = new Point(40, 480),
+
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
 
             this.Controls.Add(lblEmail);
             this.Controls.Add(txtEmail);
             this.Controls.Add(lblSenha);
             this.Controls.Add(txtSenha);
             this.Controls.Add(btnEntrar);
+            this.Controls.Add(copyrightt);
+            this.Controls.Add(btnSair);
         }
 
 

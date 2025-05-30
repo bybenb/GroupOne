@@ -6,13 +6,14 @@ namespace GestaoSimples.Componentes
 {
     public class MenuLateral : UserControl
     {
-        public event Action<string> NavegacaoSelecionada;
+        public event Action<string>? NavegacaoSelecionada;
 
         public MenuLateral()
         {
             this.Width = 180;
             this.Dock = DockStyle.Left;
-            this.BackColor = Color.FromArgb(45, 45, 48);
+            this.BackColor = ColorTranslator.FromHtml("#2D2D30");
+
 
             Button btnDashboard = CriarBotao("Dashboard");
             Button btnProdutos = CriarBotao("Produtos");
@@ -36,10 +37,13 @@ namespace GestaoSimples.Componentes
                 Height = 50,
                 FlatStyle = FlatStyle.Flat,
                 ForeColor = Color.White,
-                BackColor = Color.FromArgb(45, 45, 48),
+                BackColor = ColorTranslator.FromHtml("#2D2D30"),
+                
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatAppearance = { BorderSize = 0 }
             };
         }
     }
 }
+
+

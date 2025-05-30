@@ -8,18 +8,19 @@ using System.Windows.Forms;
 using GestaoSimples.Servicos;
 using GestaoSimples.BancoDados;
 using GestaoSimples.Componentes;
+using GestaoSimples.Utilitarios;
 using GestaoSimples.Modelos;
 using System.Globalization;
-
+// 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 
 
 namespace GestaoSimples.Telas
 {
     public class TelaDashboard : Form
     {
-        private Panel painelMenu;
-        private Panel painelCabecalho;
-        private Panel painelConteudo;
+
+        private Panel painel_Cabecalho = new Panel();
+        private Panel painel_conteudo = new Panel();
         private Ususario usuarioLogado;
 
         public TelaDashboard(Ususario usuario)
@@ -27,16 +28,15 @@ namespace GestaoSimples.Telas
             this.usuarioLogado = usuario;
 
             this.Text = "Gestão Simples";
-            //this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.Size = new Size(800, 500);
-            this.StartPosition = FormStartPosition.CenterScreen;
+            
+            Estilos.DoFormulario(this);
 
 
 
 
             CriarMenuLateral();
             CriarCabecalho();
-            CriarPainelConteudo();
+            Criarpainel_conteudo();
         }
 
         private void CriarMenuLateral()
@@ -52,7 +52,7 @@ namespace GestaoSimples.Telas
             switch (destino)
             {
                 case "Dashboard":
-                    painelConteudo.Controls.Clear(); // ou CarregarTela(new TelaResumo());
+                    painel_conteudo.Controls.Clear();
                     break;
                 case "Produtos":
                     CarregarTela(new TelaProdutos());
@@ -69,7 +69,7 @@ namespace GestaoSimples.Telas
 
         private void CriarCabecalho()
         {
-            painelCabecalho = new Panel
+            painel_Cabecalho = new Panel
             {
                 Height = 60,
                 Dock = DockStyle.Top,
@@ -94,16 +94,16 @@ namespace GestaoSimples.Telas
                 AutoSize = true
             };
 
-            painelCabecalho.Controls.Add(lblBemVindo);
-            painelCabecalho.Controls.Add(lblData);
+            painel_Cabecalho.Controls.Add(lblBemVindo);
+            painel_Cabecalho.Controls.Add(lblData);
 
-            this.Controls.Add(painelCabecalho);
+            this.Controls.Add(painel_Cabecalho);
         }
 
 
-        private void CriarPainelConteudo()
+        private void Criarpainel_conteudo()
         {
-            painelConteudo = new Panel
+            painel_conteudo = new Panel
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.White
@@ -118,13 +118,13 @@ namespace GestaoSimples.Telas
                 AutoScroll = true
             };
 
-            flow.Controls.Add(CriarCard("Vendas do Mês", "R$ 25.000"));
+            flow.Controls.Add(CriarCard("Vendas do Mês", "25.000 Kz"));
             flow.Controls.Add(CriarCard("Receita vs Despesa", "[gráfico]"));
             flow.Controls.Add(CriarCard("Pedidos Recentes", "4 pendentes"));
             flow.Controls.Add(CriarCard("Clientes", "10 cadastrados"));
 
-            painelConteudo.Controls.Add(flow);
-            this.Controls.Add(painelConteudo);
+            painel_conteudo.Controls.Add(flow);
+            this.Controls.Add(painel_conteudo);
         }
 
         private Panel CriarCard(string titulo, string valor, string imagem = "")
@@ -135,7 +135,7 @@ namespace GestaoSimples.Telas
                 Height = 120,
                 BackColor = Color.Gainsboro,
                 Location = new Point(250, 100),
-                Margin = new Padding(10),
+                Margin = new Padding(30),
                 BorderStyle = BorderStyle.FixedSingle
             };
 
@@ -174,11 +174,12 @@ namespace GestaoSimples.Telas
         }
         private void CarregarTela(Control novaTela)
         {
-            painelConteudo.Controls.Clear();
+            painel_conteudo.Controls.Clear();
             novaTela.Dock = DockStyle.Fill;
-            painelConteudo.Controls.Add(novaTela);
+            painel_conteudo.Controls.Add(novaTela);
         }
 
     }
 
 }
+// 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 

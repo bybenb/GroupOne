@@ -4,12 +4,13 @@
 using GestaoSimples.BancoDados;
 using GestaoSimples.Modelos;
 using MySql.Data.MySqlClient;
+// 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 
 namespace GestaoSimples.Servicos
 {
     public class AutenticacaoServico
     {
-        public static Ususario Autenticar(string email, string senha)
+        public static Ususario? Autenticar(string email, string senha)
         {
             using (var conexao = Conexao.ObterConexao())
             {
@@ -35,10 +36,11 @@ namespace GestaoSimples.Servicos
                     }
                     else
                     {
-                        return null; // usuário não encontrado
+                        return null;
                     }
                 }
             }
         }
     }
 }
+// 2-5-14-25    -... . -. -.--   .-. . .. ...

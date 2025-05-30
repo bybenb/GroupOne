@@ -5,15 +5,18 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-
+using GestaoSimples.Componentes;
+using GestaoSimples.BancoDados;
 using GestaoSimples.Servicos;
 using GestaoSimples.Modelos;
+using GestaoSimples.Utilitarios;
 
 // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 
 namespace GestaoSimples.Telas {
     public class TelaLogin : Form {
-        
+
+        private Label Titulo;
         private Label copyrightt;
 
         private Label lblEmail;
@@ -23,7 +26,7 @@ namespace GestaoSimples.Telas {
         private TextBox txtSenha;
 
         private Button btnEntrar;
-        private Button btnSair;
+
 
 
 
@@ -31,42 +34,37 @@ namespace GestaoSimples.Telas {
         {
 
             this.Text = "GestãoSimples - Login";
-            //   this.Icon = new Icon(@"..\imagens\img_logo-gs.ico");
+            this.MaximizeBox = false;
+            this.Icon = new Icon("imagens/img_logo-gs.ico"); 
 
-            this.Width = 800;
-            this.Height = 500;
-            this.Resize += Evento_aumentarJanela;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            
-
+            Titulo = new Label();
 
 
             lblEmail = new Label()
             {
                 Text = "Digite o Email:",
-                Left = 300,
-                Top = 40,
-                Width = 120
+                Location = new Point(300, 127),
+                AutoSize = true
             };
             txtEmail = new TextBox()
             {
-                Left = 300,
-                Top = 100,
-                Width = 200
+                Left = 270,
+                Top = 150,
+                Width = 230
             };
 
 
             lblSenha = new Label()
             {
                 Text = "Digite a Senha:",
-                Location = new Point(300, 120),
-                Width = 120
+                Location = new Point(300, 190),
+                AutoSize = true,
             };
             txtSenha = new TextBox()
             {
-                Left = 300,
-                Top = 150,
-                Width = 200,
+                Left = 270,
+                Top = 210,
+                Width = 230,
                 UseSystemPasswordChar = true
             };
 
@@ -74,44 +72,45 @@ namespace GestaoSimples.Telas {
             btnEntrar = new Button()
             {
                 Text = "Entrar",
-                Left = 400,
-                Top = 300,
-                Width = 100
+                Left = 325,
+                Top = 282,
+                Width = 150
             };
             btnEntrar.Click += Evento_tocarBotao;
 
-            btnSair = new Button()
-            {
-                Text = "Sair",
-                BackColor = ColorTranslator.FromHtml("#ff0000"),
-                ForeColor = Color.Azure
-            };
 
             copyrightt = new Label()
             {
                 Text = "© 2025 Grupo One. Todos Direitos reservados à Eng. Joana Bungo.",
                 AutoSize = true,
-                Location = new Point(40, 480),
+                Location = new Point(235, 420),
 
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                Font = new Font("Segoe UI", 8, FontStyle.Underline)
             };
 
+
+            Estilos.DoBotao(btnEntrar);
+            Estilos.DoTitulo(Titulo, "MarketPlace - GS");
+            Controls.Add(Titulo);
             this.Controls.Add(lblEmail);
             this.Controls.Add(txtEmail);
             this.Controls.Add(lblSenha);
             this.Controls.Add(txtSenha);
             this.Controls.Add(btnEntrar);
             this.Controls.Add(copyrightt);
-            this.Controls.Add(btnSair);
+            this.Resize += Evento_aumentarJanela;
+            Estilos.DoFormulario(this);
+
+            
         }
 
 
         // Todos Meus Eventos
-        private void Evento_tocarBotao(object sender, EventArgs e) {
+        private void Evento_tocarBotao(object? sender, EventArgs e) {
             string email = txtEmail.Text.Trim();
             string senha = txtSenha.Text.Trim();
 
-            Ususario usuario = AutenticacaoServico.Autenticar(email, senha);
+            Ususario? usuario = AutenticacaoServico.Autenticar(email, senha);
 
             if (usuario != null) {
                 MessageBox.Show($"Bem-vindo, {usuario.Nome}!", "Login OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -123,9 +122,10 @@ namespace GestaoSimples.Telas {
             
             else { MessageBox.Show("Credenciais inválidas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }}    // m -> t -> b -> i
 
-        private void Evento_aumentarJanela(object sender, EventArgs e) {    // Centralizo alguns componentes
-            
-            lblEmail.Left = (this.ClientSize.Width - lblEmail.Width) / 2;
+        private void Evento_aumentarJanela(object? sender, EventArgs e)
+        {    // Centralizo alguns componentes
+
+            lblEmail.Left = (this.ClientSize.Width - txtEmail.Width) / 2;
             txtEmail.Left = (this.ClientSize.Width - txtEmail.Width) / 2;
 
             lblSenha.Left = (this.ClientSize.Width - txtSenha.Width) / 2;
@@ -133,6 +133,10 @@ namespace GestaoSimples.Telas {
 
 
             btnEntrar.Left = (this.ClientSize.Width - btnEntrar.Width) / 2;
+            copyrightt.Left = (this.ClientSize.Width - copyrightt.Width) / 2;
         }
     }
 }
+
+
+// 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 

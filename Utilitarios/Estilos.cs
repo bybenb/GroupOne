@@ -2,61 +2,81 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+// 2-5-14-25    -... . -. -.--   .-. . .. ...
 
-public class ButtonRounded : Button
+
+using GestaoSimples.Servicos;
+using GestaoSimples.Modelos;
+using GestaoSimples.Utilitarios;
+
+namespace GestaoSimples.Utilitarios
 {
-    public int RaioBorda = 20;
 
-    protected override void OnPaint(PaintEventArgs e)
+
+    public class Estilos
     {
-        base.OnPaint(e);
 
-        Graphics g = e.Graphics;
-        g.SmoothingMode = SmoothingMode.AntiAlias;
 
-        Rectangle bounds = new Rectangle(0, 0, this.Width, this.Height);
-        using (GraphicsPath path = CriarBordaArredondada(bounds, RaioBorda))
+        public static void DoFormulario(Form Janela)
         {
-            this.Region = new Region(path);
 
-            using (Pen pen = new Pen(this.FlatAppearance.BorderColor, 1))
-            {
-                g.DrawPath(pen, path);
-            }
+
+            Janela.BackColor = Color.AntiqueWhite;
+            Janela.Font = new Font("Arial", 10);
+            Janela.Width = 800;
+            Janela.Height = 500;
+            Janela.StartPosition = FormStartPosition.CenterScreen;
+
+            // notifyIcon = new NotifyIcon();
+            // notifyIcon.Icon = new Icon("caminho_para_o_icone_da_barra_de_tarefas.ico");  // Ícone da barra de tarefas
+            // notifyIcon.Visible = true;
+            
         }
-    }
 
-    private GraphicsPath CriarBordaArredondada(Rectangle bounds, int radius)
-    {
-        GraphicsPath path = new GraphicsPath();
 
-        int diam = radius * 2;
 
+        public static void DoBotao(Button button)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.BackColor = ColorTranslator.FromHtml("#0078D7");
+            button.ForeColor = Color.White;
+            button.Font = new Font("Arial", 10, FontStyle.Bold);
+            button.Cursor = Cursors.Hand;
+            button.TextAlign = ContentAlignment.MiddleCenter;
+        }
+        public static void DoBotaoCancelar(Button button)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.BackColor = ColorTranslator.FromHtml("#DC3545");
+            button.ForeColor = Color.White;
+            button.Font = new Font("Arial", 10, FontStyle.Bold);
+        }
+        // 2-5-14-25    -... . -. -.--   .-. . .. ...
+        public static void DoTitulo(Label titulo, String texto)
+        {
+            titulo.Text = texto;
+            titulo.AutoSize = true;
+            titulo.Location = new Point(260, 20);
+            titulo.Font = new Font("Arial", 21, FontStyle.Bold);
+            titulo.BackColor = Color.Transparent;
+            titulo.ForeColor = ColorTranslator.FromHtml("#0078D7");
+
+            titulo.TextAlign = ContentAlignment.MiddleCenter;
+        }
+
+
+        public static void DoTextBox(TextBox textBox)
+        {
+            textBox.Font = new Font("Arial", 10, FontStyle.Regular);
+            textBox.BackColor = Color.Transparent;
+
+        }
         
-        path.AddArc(bounds.X, bounds.Y, diam, diam, 180, 90);
 
-        
-        path.AddLine(bounds.X + radius, bounds.Y, bounds.Right - radius, bounds.Y);
 
-        
-        path.AddArc(bounds.Right - diam, bounds.Y, diam, diam, 270, 90);
 
-        
-        path.AddLine(bounds.Right, bounds.Y + radius, bounds.Right, bounds.Bottom - radius);
-
-        
-        path.AddArc(bounds.Right - diam, bounds.Bottom - diam, diam, diam, 0, 90);
-
-        
-        path.AddLine(bounds.Right - radius, bounds.Bottom, bounds.X + radius, bounds.Bottom);
-
-        
-        path.AddArc(bounds.X, bounds.Bottom - diam, diam, diam, 90, 90);
-
-        
-        path.AddLine(bounds.X, bounds.Bottom - radius, bounds.X, bounds.Y + radius);
-
-        path.CloseFigure();
-        return path;
     }
 }
+// 2-5-14-25    -... . -. -.--   .-. . .. ...

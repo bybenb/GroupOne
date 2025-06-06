@@ -15,7 +15,7 @@ lib/
 .vs/
 # .vscode/
 
-# Logs and temp files
+# Logs e ficheiros temp
 *.log
 *.tmp
 *.bak
@@ -26,5 +26,11 @@ packages/
 project.lock.json
 project.fragment.lock.json
 
+# Others
+Estudar.txt
+
 
 Generated\ Files/
+
+
+

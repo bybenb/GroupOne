@@ -1,104 +1,107 @@
-// //  a pasta Tela
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using GestaoSimples.Servicos;
+using GestaoSimples.Modelos;
 
-// using System;
-// using System.Drawing;
-// using System.Windows.Forms;
+namespace GestaoSimples.Telas
+{
+    public class TelaCadastro : Form
+    {
+        private TextBox txtNome, txtEmail, txtSenha;
+        private ComboBox cmbTipo;
+        private Button btnCadastrar, btnCancelar;
 
+        public TelaCadastro()
+        {
+            this.Text = "Criar Conta - GestãoSimples";
+            this.Size = new Size(400, 350);
+            this.StartPosition = FormStartPosition.CenterScreen;
 
+            InicializarControles();
+        }
 
-// using GestaoSimples.Servicos;
-// using GestaoSimples.Modelos;
-// // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
+        private void InicializarControles()
+        {
+            Label lblTitulo = new Label
+            {
+                Text = "Criar Conta",
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                Location = new Point(20, 20),
+                AutoSize = true
+            };
 
-// namespace GestaoSimples.Telas {
-//     public class TelaLogin : Form {
-        
-//         private Label lblEmail;
-//         private TextBox txtEmail;
-        
-//         private Label lblSenha;
-//         private TextBox txtSenha;
+            Label lblNome = new Label { Text = "Nome:", Location = new Point(20, 70) };
+            txtNome = new TextBox { Location = new Point(100, 70), Width = 250 };
 
-//         private Button btnEntrar;
+            Label lblEmail = new Label { Text = "Email:", Location = new Point(20, 110) };
+            txtEmail = new TextBox { Location = new Point(100, 110), Width = 250 };
 
+            Label lblSenha = new Label { Text = "Senha:", Location = new Point(20, 150) };
+            txtSenha = new TextBox { Location = new Point(100, 150), Width = 250, UseSystemPasswordChar = true };
 
+            Label lblTipo = new Label { Text = "Tipo de Conta:", Location = new Point(20, 190) };
+            cmbTipo = new ComboBox
+            {
+                Location = new Point(130, 190),
+                Width = 150,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            cmbTipo.Items.AddRange(new string[] { "utilizador", "fornecedor" });
 
-//         public TelaLogin() {
+            btnCadastrar = new Button
+            {
+                Text = "Cadastrar",
+                Location = new Point(60, 240),
+                Width = 100,
+                BackColor = Color.SeaGreen,
+                ForeColor = Color.White
+            };
+            btnCadastrar.Click += BtnCadastrar_Click;
 
-//             this.Text = "GestãoSimples - Login";
-//             this.Width = 800;
-//             this.Height = 500;
-//             this.Resize += Evento_aumentarJanela;
-//             this.StartPosition = FormStartPosition.CenterScreen;
+            btnCancelar = new Button
+            {
+                Text = "Cancelar",
+                Location = new Point(200, 240),
+                Width = 100,
+                BackColor = Color.Gray,
+                ForeColor = Color.White
+            };
+            btnCancelar.Click += (s, e) => this.Close();
 
+            this.Controls.AddRange(new Control[]
+            {
+                lblTitulo, lblNome, txtNome,
+                lblEmail, txtEmail,
+                lblSenha, txtSenha,
+                lblTipo, cmbTipo,
+                btnCadastrar, btnCancelar
+            });
+        }
 
-//             lblEmail = new Label() {
-//                 Text = "Digite o Email:",
-//                 Left = 300,
-//                 Top = 40,
-//                 Width = 120
-//             };            
-//             txtEmail = new TextBox() { 
-//                 Left =  300,
-//                 Top = 100,
-//                 Width = 200
-//             };
+        private void BtnCadastrar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNome.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtSenha.Text) ||
+                cmbTipo.SelectedIndex == -1)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos.");
+                return;
+            }
 
+            var novoUsuario = new Ususario
+            {
+                Nome = txtNome.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                Senha = txtSenha.Text.Trim(),
+                Tipo = cmbTipo.SelectedItem.ToString()
+            };
 
-//             lblSenha = new Label() {
-//                 Text = "Digite a Senha:",
-//                 Location = new Point(300, 120),
-//                 Width = 120
-//             };
-//             txtSenha = new TextBox() {
-//                 Left = 300,
-//                 Top = 150,
-//                 Width = 200,
-//                 UseSystemPasswordChar = true
-//             };
+            UsuarioServico.Cadastrar(novoUsuario);
 
-
-//             btnEntrar = new Button() {
-//                 Text = "Entrar",
-//                 Left = 100,
-//                 Top = 300,
-//                 Width = 100
-//             };
-//             btnEntrar.Click += Evento_tocarBotao;
-
-//             this.Controls.Add(lblEmail);
-//             this.Controls.Add(txtEmail);
-//             this.Controls.Add(lblSenha);
-//             this.Controls.Add(txtSenha);
-//             this.Controls.Add(btnEntrar);
-//         }
-
-
-//         // Todos Meus Eventos
-//         private void Evento_tocarBotao(object sender, EventArgs e) {
-//             string email = txtEmail.Text.Trim();
-//             string senha = txtSenha.Text.Trim();
-
-//             Ususario usuario = AutenticacaoServico.Autenticar(email, senha);
-
-//             if (usuario != null) {
-//                 MessageBox.Show($"Bem-vindo, {usuario.Nome}!", "Login OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
-//                 this.Hide();
-//                 new TelaDashboard().ShowDialog();
-//             }
-            
-//             else { MessageBox.Show("Credenciais inválidas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }}    // m -> t -> b -> i
-
-//         private void Evento_aumentarJanela(object sender, EventArgs e) {    // Centralizo alguns componentes
-            
-//             lblEmail.Left = (this.ClientSize.Width - lblEmail.Width) / 2;
-//             txtEmail.Left = (this.ClientSize.Width - txtEmail.Width) / 2;
-
-//             lblSenha.Left = (this.ClientSize.Width - txtSenha.Width) / 2;
-//             txtSenha.Left = (this.ClientSize.Width - txtSenha.Width) / 2;
-
-
-//             btnEntrar.Left = (this.ClientSize.Width - btnEntrar.Width) / 2;
-//         }
-//     }
-// }
+            MessageBox.Show("Conta criada com sucesso. Faça login para continuar.");
+            this.Close();
+        }
+    }
+}

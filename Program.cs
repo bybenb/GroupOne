@@ -3,6 +3,7 @@
 using System;
 using System.Windows.Forms;
 using GestaoSimples.Telas;
+using GestaoSimples.Telas.Publico;
 // 2-5-14-25    -... . -. -.--   .-. . .. ...
 
 namespace GestaoSimples;
@@ -17,7 +18,7 @@ static class Program
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TelaLogin());
+            Application.Run(new TelaInicial());
         }
         catch (Exception problema)
         {

@@ -1,0 +1,15 @@
+/*
+Este Arquivo pode ser ignorado...
+
+Criamos este arquivo para podermos tirar os codigos das cores
+em Hexadecimal. 
+
+Por exemplo "#2D2D30"  no codigo "ColorTranslator.FromHtml("#2D2D30")". Obtivemos
+daqui, usando CSS... 
+*/
+
+
+body {
+    color: #c7fff7;
+    background-color: #4c6854;
+}

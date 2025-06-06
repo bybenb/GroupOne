@@ -3,6 +3,7 @@
 // using System;
 using GestaoSimples.BancoDados;
 using GestaoSimples.Modelos;
+using GestaoSimples.Telas.Publico;
 using MySql.Data.MySqlClient;
 // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 

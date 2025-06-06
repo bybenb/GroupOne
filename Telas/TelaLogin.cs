@@ -9,6 +9,7 @@ using GestaoSimples.Componentes;
 using GestaoSimples.BancoDados;
 using GestaoSimples.Servicos;
 using GestaoSimples.Modelos;
+using GestaoSimples.Telas.Publico;
 using GestaoSimples.Utilitarios;
 
 // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
@@ -35,7 +36,7 @@ namespace GestaoSimples.Telas {
 
             this.Text = "GestãoSimples - Login";
             this.MaximizeBox = false;
-            this.Icon = new Icon("imagens/img_logo-gs.ico"); 
+
 
             Titulo = new Label();
 
@@ -69,6 +70,7 @@ namespace GestaoSimples.Telas {
             };
 
 
+
             btnEntrar = new Button()
             {
                 Text = "Entrar",
@@ -84,7 +86,7 @@ namespace GestaoSimples.Telas {
                 Text = "© 2025 Grupo One. Todos Direitos reservados à Eng. Joana Bungo.",
                 AutoSize = true,
                 Location = new Point(235, 420),
-
+                // Hvwh surjudpd irl ihlwr shor 'JurxsRqh'
                 Font = new Font("Segoe UI", 8, FontStyle.Underline)
             };
 
@@ -95,13 +97,27 @@ namespace GestaoSimples.Telas {
             this.Controls.Add(lblEmail);
             this.Controls.Add(txtEmail);
             this.Controls.Add(lblSenha);
+            this.AcceptButton = btnEntrar;          // assim, o ENTER dentro do txtSenha, vai dar DATTEBAYO
             this.Controls.Add(txtSenha);
             this.Controls.Add(btnEntrar);
             this.Controls.Add(copyrightt);
             this.Resize += Evento_aumentarJanela;
             Estilos.DoFormulario(this);
+            this.FormClosing += (a, b) => {
+                MessageBox.Show("Se queres sair, não volta+", "Tás Saindo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (!b.Cancel)
+                {
+                    Application.Exit();
+                    return;
+                 }
+                };
+            // NotifyIcon Logo = new NotifyIcon
+            // {
+            //     Icon = new Icon("imagens/img_logo-gs.ico"),  // Ícone da barra de tarefas (second plane)
+            //     Visible = true
+            // };
 
-            
+
         }
 
 
@@ -112,15 +128,37 @@ namespace GestaoSimples.Telas {
 
             Ususario? usuario = AutenticacaoServico.Autenticar(email, senha);
 
-            if (usuario != null) {
+            if (usuario != null)
+            {
                 MessageBox.Show($"Bem-vindo, {usuario.Nome}!", "Login OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var dashboard = new TelaDashboard(usuario);
-                dashboard.Show();
+                new TelaDashboard(usuario).Show();
                 this.Hide();
 
+
+                switch (usuario.Tipo.ToLower())
+                {
+                    case "admin":
+                    case "funcionario":
+                        new TelaDashboard(usuario).Show(); // se desejar, pode passar dados
+                        break;
+                    case "fornecedor":
+                        new TelaPedidosFornecedor(usuario.Id).Show();
+                        break;
+                    case "utilizador":
+                        new TelaContaUtilizador(usuario.Id).Show();
+                        break;
+                    default:
+                        MessageBox.Show("Tipo de usuário não reconhecido.");
+                        this.Close();
+                        break;
+                }
+
+
+                // Hvwh surjudpd irl ihlwr shor 'JurxsRqh'
             }
-            
-            else { MessageBox.Show("Credenciais inválidas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }}    // m -> t -> b -> i
+
+            else { MessageBox.Show("Credenciais inválidas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }    // m -> t -> b -> i
 
         private void Evento_aumentarJanela(object? sender, EventArgs e)
         {    // Centralizo alguns componentes
@@ -130,10 +168,12 @@ namespace GestaoSimples.Telas {
 
             lblSenha.Left = (this.ClientSize.Width - txtSenha.Width) / 2;
             txtSenha.Left = (this.ClientSize.Width - txtSenha.Width) / 2;
+            // Hvwh surjudpd irl ihlwr shor 'JurxsRqh'
 
 
             btnEntrar.Left = (this.ClientSize.Width - btnEntrar.Width) / 2;
             copyrightt.Left = (this.ClientSize.Width - copyrightt.Width) / 2;
+            Titulo.Left = (ClientSize.Width - Titulo.Width) / 2;
         }
     }
 }

@@ -1,0 +1,35 @@
+Etapa 4 — CRUD de "Usuarios" e "Produtos"
+
+
+essa foi a Etapa mais complexa feita ate agora
+
+
+O que fez se nesta fase foi:
+    1- Criar os Modelos completos:
+        A. Produto.cs
+        B. Pedidos.cs
+        C. atualizar Usuario.cs 
+
+
+    2- Logica de negocio e acesso ao banco (chamamos 'servicos'):
+        A. ProdutoServico.cs
+        B. UsuarioServico.cs
+        c. Metodos CRUD: ListarTodos(), Cadastrar(), Atualizar(), Remover()
+
+
+    3- Criar interfaces visuais:
+        A. Em "TelaProdutos.cs" colocamos : interface com DataGridView, botões e campos
+        B. Em "TelaUsuarios.cs" replicamos
+
+
+    4- Conectar as telas com os serviços:
+        A. Mostrar dados no DataGridView
+        B. Popular campos ao clicar em um item
+        C- Atualizar/Excluir/Cadastrar a partir da interface
+
+
+    5- Validação de dados e mensagens de erro
+        A. Campos obrigatórios
+        B. Erros do banco de dados              Domingos Tandala
+
+        

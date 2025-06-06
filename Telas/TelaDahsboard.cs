@@ -10,176 +10,125 @@ using GestaoSimples.BancoDados;
 using GestaoSimples.Componentes;
 using GestaoSimples.Utilitarios;
 using GestaoSimples.Modelos;
+using GestaoSimples.Telas.Publico;
 using System.Globalization;
 // 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 
 
 
 namespace GestaoSimples.Telas
 {
+
     public class TelaDashboard : Form
     {
 
-        private Panel painel_Cabecalho = new Panel();
-        private Panel painel_conteudo = new Panel();
+        private Panel painelCabecalho;
+        private MenuLateral menu;
+
         private Ususario usuarioLogado;
 
-        public TelaDashboard(Ususario usuario)
+        public TelaDashboard(Ususario U_Logado)
         {
-            this.usuarioLogado = usuario;
-
             this.Text = "Gestão Simples";
+            this.WindowState = FormWindowState.Maximized;
+
+
+            ConfigurarInterface();
             
             Estilos.DoFormulario(this);
-
-
-
-
-            CriarMenuLateral();
-            CriarCabecalho();
-            Criarpainel_conteudo();
         }
 
-        private void CriarMenuLateral()
+        private void ConfigurarInterface()
         {
-            var menu = new MenuLateral();
+            this.Controls.Clear();
+            this.BackColor = Color.White;
 
-            menu.NavegacaoSelecionada += NavegarPara;
+
+            menu = new MenuLateral();
+            menu.Evento_Botaotocado += oSelecionado;
             this.Controls.Add(menu);
+
+
+            CarregarTela("Dashboard");
         }
 
-        private void NavegarPara(string destino)
+        private void oSelecionado(string destino)
         {
-            switch (destino)
+            CarregarTela(destino);
+        }
+
+        private void CarregarTela(string tela)
+        {
+            // Todos Controles antigos vao sair, exceto o menu
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl != menu)
+                {
+                    this.Controls.Remove(ctrl);
+                    break;
+                }
+            }
+
+            UserControl telaCarregada = null;
+
+            switch (tela)
             {
                 case "Dashboard":
-                    painel_conteudo.Controls.Clear();
+                    telaCarregada = new OpcaoDashboard();
                     break;
                 case "Produtos":
-                    CarregarTela(new TelaProdutos());
+                    telaCarregada = new TelaProdutos();
                     break;
-                case "Usuarios":
-                    CarregarTela(new TelaUsuarios());
+                case "Usuários":
+                    telaCarregada = new TelaUsuarios();
                     break;
-                case "Sair":
+                case "Logout":
                     Application.Exit();
-                    break;
+                    return;
+            }
+
+            if (telaCarregada != null)
+            {
+                telaCarregada.Dock = DockStyle.Fill;
+                telaCarregada.Left = menu.Width;
+                this.Controls.Add(telaCarregada);
+                telaCarregada.BringToFront();
             }
         }
 
 
-        private void CriarCabecalho()
-        {
-            painel_Cabecalho = new Panel
-            {
-                Height = 60,
-                Dock = DockStyle.Top,
-                BackColor = Color.WhiteSmoke
-            };
+        // private void CriarCabecalho()
+        // {
+        //     painelCabecalho = new Panel
+        //     {
+        //         Size = new Size(this.Width - menu.Width, 60),
+        //         Left = menu.Width,
+        //         BackColor = Color.WhiteSmoke
 
-            Label lblBemVindo = new Label
-            {
-                Text = $"Bem-vindo, {usuarioLogado.Nome}",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Location = new Point(20, 18),
-                AutoSize = true
-            };
+        //     };
 
-            CultureInfo idioma = new CultureInfo("pt-BR");  //  en-US
-            Label lblData = new Label
-            {
-                
-                Text = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", idioma),
-                Font = new Font("Segoe UI", 10, FontStyle.Italic),  // FONSAIZESTE (FONTE+SIZE+STYLE)
-                Location = new Point(400, 20),
-                AutoSize = true
-            };
+        //     Label lblBemVindo = new Label
+        //     {
+        //         Text = $"Bem-vindo, {usuarioLogado.Nome}",
+        //         Font = new Font("Segoe UI", 12, FontStyle.Bold),
+        //         Location = new Point(20, 18),
+        //         AutoSize = true
+        //     };
 
-            painel_Cabecalho.Controls.Add(lblBemVindo);
-            painel_Cabecalho.Controls.Add(lblData);
+        //     Label lblData = new Label
+        //     {
+        //         Text = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy"),
+        //         Font = new Font("Segoe UI", 10, FontStyle.Italic),
+        //         Location = new Point(400, 20),
+        //         AutoSize = true
+        //     };
 
-            this.Controls.Add(painel_Cabecalho);
-        }
+        //     painelCabecalho.Controls.Add(lblBemVindo);
+        //     painelCabecalho.Controls.Add(lblData);
 
-
-        private void Criarpainel_conteudo()
-        {
-            painel_conteudo = new Panel
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Color.White
-            };
-
-            FlowLayoutPanel flow = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = true,
-                Padding = new Padding(100),
-                AutoScroll = true
-            };
-
-            flow.Controls.Add(CriarCard("Vendas do Mês", "25.000 Kz"));
-            flow.Controls.Add(CriarCard("Receita vs Despesa", "[gráfico]"));
-            flow.Controls.Add(CriarCard("Pedidos Recentes", "4 pendentes"));
-            flow.Controls.Add(CriarCard("Clientes", "10 cadastrados"));
-
-            painel_conteudo.Controls.Add(flow);
-            this.Controls.Add(painel_conteudo);
-        }
-
-        private Panel CriarCard(string titulo, string valor, string imagem = "")
-        {
-            var card = new Panel
-            {
-                Width = 260,
-                Height = 120,
-                BackColor = Color.Gainsboro,
-                Location = new Point(250, 100),
-                Margin = new Padding(30),
-                BorderStyle = BorderStyle.FixedSingle
-            };
-
-            if (!string.IsNullOrEmpty(imagem))
-            {
-                PictureBox icon = new PictureBox
-                {
-                    Image = Image.FromFile(imagem),
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Location = new Point(180, 10),
-                    Size = new Size(60, 60)
-                };
-                card.Controls.Add(icon);
-            }
-
-            Label lblTitulo = new Label
-            {
-                Text = titulo,
-                Location = new Point(10, 10),
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                AutoSize = true
-            };
-
-            Label lblValor = new Label
-            {
-                Text = valor,
-                Location = new Point(10, 45),
-                Font = new Font("Segoe UI", 18, FontStyle.Regular),
-                AutoSize = true
-            };
-
-            card.Controls.Add(lblTitulo);
-            card.Controls.Add(lblValor);
-
-            return card;
-        }
-        private void CarregarTela(Control novaTela)
-        {
-            painel_conteudo.Controls.Clear();
-            novaTela.Dock = DockStyle.Fill;
-            painel_conteudo.Controls.Add(novaTela);
-        }
+        //     this.Controls.Add(painelCabecalho);
+        // }
 
     }
 
+
 }
-// 2-5-14-25    -... . -. -.--   .-. . .. ... (ABC123 & MORSE CODE) 

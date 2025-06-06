@@ -8,7 +8,7 @@
 --                                      Terceiro Setup do Banco de Dados. 
 --        a.  Adicionamos tabelas ();
 --        b. Adicionamos tabela Produtos;
---        c. Adicionamos tabela Fornecedores;
+--        c. Adicionamos tabela Pedidos;
 --        d. Adicionamos tabela Produtos_Fornecedores;
 --        e. Adicionamos tabela Vendas;
 --        f. Adicionamos tabela Itens_Venda;
@@ -31,13 +31,13 @@ USE bancode_gestaosimples;
 
 -- ------------------------------------------------------CREATE TABLEs--------------------------------------------------
 
-CREATE TABLE criadores(
+CREATE TABLE IF NOT EXISTS criadores(
     id int AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
 
-CREATE TABLE  usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -71,7 +71,20 @@ CREATE TABLE IF NOT EXISTS Produtos (
 
 
 
-
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    usuario_id INT,                      -- null se for visitante
+    nome_visitante VARCHAR(100),         -- apenas se visitante
+    email_visitante VARCHAR(100),
+    local_entrega VARCHAR(100),
+    status ENUM('pendente','reencaminhado','entregue','cancelado') DEFAULT 'pendente',
+    data_pedido DATETIME NOT NULL,
+    fornecedor_id INT,                   -- preenchido depois pelo funcioario
+    FOREIGN KEY (produto_id) REFERENCES produtos(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (fornecedor_id) REFERENCES usuarios(id)
+);
 
 
 
@@ -143,4 +156,4 @@ INSERT INTO Produtos (id_usuario, nome, descricao, preco, quantidade_estoque, ca
 
 INSERT INTO criadores (nome) VALUES
 ('Beny B. Reis'), ('Lord Sapiência'), ('Neidy Scobar'), ('Steam Blood'), ('Marcos Mpelo'),
-('Ariclenio Mendes'), ('Augusto Lopes'), ('Kelvin Magalhães'), ('Junilson Gomes'), ('Domingos Tandala');
+('Ariclenio Mendes'), ('Augusto Lopes'), ('Kelvin Magalhães KP'), ('Junilson Gomes'), ('Domingos Tandala');
